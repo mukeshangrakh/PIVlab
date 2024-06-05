@@ -4,27 +4,27 @@ classdef options < handle
     %   properties.
 
     properties (Access=public)
-        noCores(1,1) int64
+        noCores(1,1) int64 = 1
         filesRegExp(1,1) string
         files(:,1) string
         pairWise(1,1) logical
         windowSize(1,:) int64
         stepSize(1,1) double
-        subPixelFinder(1,1) string
+        subPixelFinder(1,1) string {mustBeMember(subPixelFinder,["3P Gauss","2D Gauss"])} = "3P Gauss"
         roi(1,4) double
-        windowDeformation(1,1) string 
+        windowDeformation(1,1) string {mustBeMember(windowDeformation,["Linear","Spline"])} = "Linear"
         maskfile(1,1) string
-        repeatCorrelation(1,1) logical
-        autoCorrelation(1,1) logical
-        correlationStyle(1,1) string {mustBeMember(correlationStyle,["Circular","Linear"])}
-        multiplePass(1,1) logical
-        qualitySlope(1,1) double
-        clipping(1,1) logical
-        contrastEnhancementWindow(1,1) double
-        highPassWindow(1,1) double
-        wienerWindow(1,1) double
-        minIntensity(1,1) double
-        maxIntensity(1,1) double
+        repeatCorrelation(1,1) logical = false
+        autoCorrelation(1,1) logical = false
+        correlationStyle(1,1) string {mustBeMember(correlationStyle,["Circular","Linear"])} = "Linear"
+        multiplePass(1,1) logical = false
+        qualitySlope(1,1) double = 0.025
+        clipping(1,1) logical = false
+        contrastEnhancementWindow(1,1) double = 50
+        highPassWindow(1,1) double = NaN
+        wienerWindow(1,1) double = NaN
+        minIntensity(1,1) double = 0.0
+        maxIntensity(1,1) double = 1.0
     end
 
     methods
@@ -32,9 +32,7 @@ classdef options < handle
             arguments
                 args.?pivlab.options
             end
-            % Set default arguments
-            obj.noCores = 1;
-            
+
             % Override the default arguments with custom inputs
             mFields = fields(args);
             if ~isempty(mFields)
@@ -45,12 +43,12 @@ classdef options < handle
         end
 
         function update(obj, args)
-             arguments
+            arguments
                 obj(1,1) pivlab.options
                 args.?pivlab.options
-             end
+            end
 
-             % Override the default arguments with custom inputs
+            % Override the default arguments with custom inputs
             mFields = fields(args);
             if ~isempty(mFields)
                 for idx = 1:numel(mFields)
