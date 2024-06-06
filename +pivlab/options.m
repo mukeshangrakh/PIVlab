@@ -5,8 +5,6 @@ classdef options < handle
 
     properties (Access=public)
         noCores(1,1) int64 = 1
-        filesRegExp(1,1) string
-        files(:,1) string
         pairWise(1,1) logical
         windowSize(1,:) int64
         stepSize(1,1) double
@@ -27,11 +25,29 @@ classdef options < handle
         maxIntensity(1,1) double = 1.0
     end
 
+    properties (Access=private)
+        files(:,1) string
+        filesRegExp(1,1) string
+    end
+
     methods
-        function obj = options(args)
+        function obj = options(fRegEx, args)
             arguments
+                fRegEx(1,1) string
                 args.?pivlab.options
             end
+
+            % Check if the files exist
+            l = dir(fRegEx);
+            if isempty(l)
+                error("Files not found.");
+            end
+            obj.filesRegExp = fRegEx;
+
+            for i=1:numel(l)
+                obj.files(end+1,1) = fullfile(l(i).folder, l(i).name);
+            end
+            sort(obj.files)
 
             % Override the default arguments with custom inputs
             mFields = fields(args);
@@ -41,22 +57,6 @@ classdef options < handle
                 end
             end
         end
-
-        function update(obj, args)
-            arguments
-                obj(1,1) pivlab.options
-                args.?pivlab.options
-            end
-
-            % Override the default arguments with custom inputs
-            mFields = fields(args);
-            if ~isempty(mFields)
-                for idx = 1:numel(mFields)
-                    obj.(mFields{idx}) = args.(mFields{idx});
-                end
-            end
-        end
-
     end
 end
 
