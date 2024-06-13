@@ -10,7 +10,7 @@ classdef PIVLAB
         function obj = PIVLAB(directory,args)
             arguments
                 directory                
-                args.options (1,1) pivlab.options =pivlab.options
+                args.options (1,1) pivlab.options = pivlab.options
             end
             obj.directory = directory;
             obj.files = obj.getFiles();

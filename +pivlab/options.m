@@ -33,26 +33,5 @@ classdef options < handle
         noCores(1,1) int64 = 1
         pairWise(1,1) logical
     end
-
-    properties (Access=private)
-        files(:,1) string
-        filesRegExp(1,1) string
-    end
-
-    methods
-        function obj = options(args)
-            arguments
-                args.?pivlab.options
-            end
-
-            % Override the default arguments with custom inputs
-            mFields = fields(args);
-            if ~isempty(mFields)
-                for idx = 1:numel(mFields)
-                    obj.(mFields{idx}) = args.(mFields{idx});
-                end
-            end
-        end
-    end
 end
 
