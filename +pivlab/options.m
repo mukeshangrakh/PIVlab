@@ -31,7 +31,7 @@ classdef options < handle
         maxIntensity(1,1) double = 1.0
 
         noCores(1,1) int64 = 1
-        pairWise(1,1) logical
+        pairWise(1,1) logical = true
     end
 end
 
