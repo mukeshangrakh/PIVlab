@@ -1,4 +1,4 @@
-classdef options < handle
+classdef options
     %pivlab.options class to create a pivlab options object.
     %   This class contains the piv image analysis configurations as its
     %   properties.
@@ -15,7 +15,7 @@ classdef options < handle
 
         repeatCorrelation(1,1) logical = false
         autoCorrelation(1,1) logical = false
-        correlationStyle(1,1) string {mustBeMember(correlationStyle,["Circular","Linear"])} = "Linear"
+        correlationStyle(1,1) string {mustBeMember(correlationStyle,["Circular","Linear"])} = "Circular"
         multiplePass(1,1) logical = false
         qualitySlope(1,1) double = 0.025
         
