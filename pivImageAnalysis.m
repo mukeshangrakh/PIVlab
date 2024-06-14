@@ -9,10 +9,9 @@ imFiles = dir(regExp);
 if isempty(imFiles)
     error("Did not find files to analyse.")
 end
-
 noImages = numel(imFiles);
-% Determine the no of time slices
 
+% Determine the no of time slices
 if ~pivOptions.pairWise
     noSteps = noImages-1;
     imRelation = zeros(noSteps, 2);
